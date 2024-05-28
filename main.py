@@ -1,80 +1,74 @@
-#lista 
-lista = []
+# importa biblioteca
+import os
 
-# inserir pessoa na lista 
-nome = input("Digite o nome a ser inserido: ")
-lista.append(nome)
-print('Pessoa inserida com sucesso!')
+# lista
+nomes = []
 
-# listar pessoas
-if lista:
-    print('Lista de pessoas')
-
-else:
-    print("Pessoas cadastradas: ")
-    for index, pessoa in enumerate(lista, start=1):
-        print(f"{index}. {pessoa}")
-
-# pesquisar pessoas na lista
-nome = input("Digite o nome da pessoa a ser pesquisada: ")
-if nome in lista:
-    print(f"{nome} está na lista de pessoas cadastradas.")
-else:
-    print(f"{nome} não encontrado na lista.")
-
-
-# ordenar lista
-lista.sort()
-print("Lista ordenada por ordem alfabética.")
-
-# atualizar nomes
-nome_antigo = input("Digite o nome a ser atualizado: ")
-if nome_antigo in lista:
-        index = lista.index(nome_antigo)
-        novo_nome = input("Digite o novo nome: ")
-        lista[index] = novo_nome
-        print("Nome atualizado com sucesso!")
-else:
-        print(f"{nome_antigo} não encontrado na lista.")
-
-# deletar nome da lista
-nome = input("Digite o nome da pessoa a ser removida: ")
-if nome in lista:
-    lista.remove(nome)
-    print("Nome removido da lista.")
-else:
-    print(f"{nome} não encontrado na lista.")
-
-
-# lista de pessoas 
-lista_de_pessoas = []
-
+# loop
 while True:
-        print("\n----- Menu -----")
-        print("1. Inserir pessoa na lista")
-        print("2. Listar pessoas cadastradas")
-        print("3. Pesquisar pelo nome de uma pessoa")
-        print("4. Ordenar a lista por ordem alfabética")
-        print("5. Atualizar nome")
-        print("6. Deletar nome da lista")
-        print("7. Sair do programa")
-        escolha = input("Escolha uma opção: ")
+    # opções
+    print(f'{'-' * 30} CRUD {'-' * 30}\n')
+    print('1 - Inserir nome.')
+    print('2 - Listar nomes.')
+    print('3 - Pesquisar por um nome.')
+    print('4 - Ordenar nomes.')
+    print('5 - Atualizar um nome.')
+    print('6 - Deletar um nome.')
+    print('7 - Sair do programa.')
 
-        if escolha == "1":
-            inserir_pessoa(lista_de_pessoas)
-        elif escolha == "2":
-            listar_pessoas(lista_de_pessoas)
-        elif escolha == "3":
-            pesquisar_pessoa(lista_de_pessoas)
-        elif escolha == "4":
-            ordenar_lista(lista_de_pessoas)
-        elif escolha == "5":
-            atualizar_nome(lista_de_pessoas)
-        elif escolha == "6":
-            deletar_nome(lista_de_pessoas)
-        elif escolha == "7":
-            print("Saindo do programa...")
+    # usuário informa a opção desejada
+    opcao = int(input('Informe a opção desejada: '))
+
+    # limpa console
+    os.system('cls')
+
+    # verifica a opção escolhida
+    match opcao:
+        case 1:
+            novo_nome = input('Novo nome: ')
+            nomes.append(novo_nome)
+            print(f'{novo_nome} inserido com sucesso.\n')
+            continue
+        case 2:
+            for i in range(len(nomes)):
+                print(f'ID: {i + 1} - {nomes[i]}')
+            print('')
+            continue
+        case 3:
+            pesquisa_nome = input('Pesquisar nome: ')
+            quantidade = nomes.count(pesquisa_nome)
+            try:
+                print(f'Encontrado {quantidade} vezes: {pesquisa_nome}\n')
+            except:
+                print(f'{pesquisa_nome} não encontrado.\n')
+            continue
+        case 4:
+            nomes.sort()
+            print('Ordenação feita com sucesso.\n')
+            continue
+        case 5:
+            id_nome = int(input('Informe o ID do nome a ser alterado: '))
+            if id_nome > 0 and id_nome < len(nomes):
+                id_nome -= 1
+            else:
+                print(f'{id_nome} inválido.\n')
+                continue
+            nomes[id_nome] = input('Informe o novo nome: ')
+            print(f'Nome do ID {id_nome + 1} alterado com sucesso.\n')
+            continue
+        case 6:
+            id_nome = int(input('Informe o ID do nome a ser excluído: '))
+            if id_nome > 0 and id_nome < len(nomes):
+                id_nome -= 1
+            else:
+                print(f'{id_nome} inválido.\n')
+                continue
+            del(nomes[id_nome])
+            print(f'Nome deletado com sucesso.\n')
+            continue
+        case 7:
             break
-        else:
-            print("Opção inválida. Por favor, escolha uma opção válida.")
+        case _:
+            print('Opção inválida.\n')
+            continue
 
